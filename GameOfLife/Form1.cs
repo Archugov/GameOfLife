@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace GameOfLife
 {
@@ -18,6 +17,7 @@ namespace GameOfLife
         private bool[,] field;
         private int cols;
         private int rows;
+        private int currentGeneration = 0;
 
         public Form1()
         {
@@ -28,6 +28,9 @@ namespace GameOfLife
         {
             if (timer1.Enabled)
                 return;
+
+            currentGeneration = 0;
+            Text = $"Генерация {currentGeneration}";
 
             numResolution.Enabled = false;
             numDensity.Enabled = false;
@@ -52,8 +55,9 @@ namespace GameOfLife
 
         private void StopGame()
         {
-            if (timer1.Enabled)
+            if (!timer1.Enabled)
                 return;
+
             timer1.Stop();
 
             numDensity.Enabled = true;
@@ -87,6 +91,7 @@ namespace GameOfLife
             field = newField;
 
             pictureBox1.Refresh();
+            Text = $"Генерация {++currentGeneration}";
         }
 
         private int fieldNeighbours(int x, int y)
@@ -97,8 +102,8 @@ namespace GameOfLife
             {
                 for (int j = -1; j < 2; j++)
                 {
-                    var col = x + i;
-                    var row = y + j;
+                    var col = (x + i + cols) % cols;
+                    var row = (y + j + rows) % rows;
                     var isSelfCheck = col == x && row == y;
                     var hasLife = field[col, row];
 
@@ -123,6 +128,41 @@ namespace GameOfLife
         private void butStop_Click(object sender, EventArgs e)
         {
             StopGame();
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!timer1.Enabled)
+                return;
+
+            if (e.Button == MouseButtons.Left)
+            {
+                var x = e.Location.X / resolution;
+                var y = e.Location.Y / resolution;
+
+                var validatePos = ValidateMousePos(x, y);
+                if (validatePos)
+                    field[x, y] = true;
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                var x = e.Location.X / resolution;
+                var y = e.Location.Y / resolution;
+                var validatePos = ValidateMousePos(x, y);
+                if (validatePos)
+                    field[x, y] = false;
+            }
+        }
+
+        private bool ValidateMousePos(int x, int y)
+        {
+            return x >= 0 && y >= 0 && x < cols && y < rows;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Text = $"Генерация {++currentGeneration}";
         }
     }
 }
