@@ -32,6 +32,7 @@ namespace GameOfLife
             numResolution.Enabled = false;
             numDensity.Enabled = false;
 
+            resolution = (int)numResolution.Value;
             cols = pictureBox1.Width / resolution;
             rows = pictureBox1.Height / resolution;
 
@@ -42,19 +43,48 @@ namespace GameOfLife
             {
                 for (int y = 0; y < rows; y++)
                 {
-
+                    field[x,y] = random.Next((int)numDensity.Value) == 0;
                 }
             }
 
-            resolution = (int)numResolution.Value;
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             graphics = Graphics.FromImage(pictureBox1.Image);
             graphics.FillRectangle(Brushes.Red, 0, 0, resolution, resolution);
+
+            timer1.Start();
+        }
+
+        private void StopGame()
+        {
+            if (timer1.Enabled)
+                return;
+            timer1.Stop();
+
+            numDensity.Enabled = true;
+            numResolution.Enabled = true;
+        }
+
+        private void Generation()
+        {
+            graphics.Clear(Color.Black);
+
+            for (int x = 0; x < cols; x++)
+            {
+                for (int y = 0; y < rows; y++)
+                {
+                    if (field[x,y])
+                    {
+                        graphics.FillRectangle(Brushes.Red, x * resolution, y * resolution, resolution, resolution);
+                    }
+                }
+            }
+
+            pictureBox1.Refresh();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-
+            Generation();
         }
 
         private void butStart_Click(object sender, EventArgs e)
@@ -64,7 +94,7 @@ namespace GameOfLife
 
         private void butStop_Click(object sender, EventArgs e)
         {
-
+            StopGame();
         }
     }
 }
