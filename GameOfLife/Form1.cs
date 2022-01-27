@@ -14,10 +14,7 @@ namespace GameOfLife
     {
         private Graphics graphics;
         private int resolution;
-        private bool[,] field;
-        private int cols;
-        private int rows;
-        private int currentGeneration = 0;
+        private Logic logic;
 
         public Form1()
         {
@@ -29,22 +26,23 @@ namespace GameOfLife
             if (timer1.Enabled)
                 return;
 
-            currentGeneration = 0;
-            Text = $"Генерация {currentGeneration}";
+            
 
             numResolution.Enabled = false;
             numDensity.Enabled = false;
 
             resolution = (int)numResolution.Value;
-            cols = pictureBox1.Width / resolution;
-            rows = pictureBox1.Height / resolution;
 
-            field = new bool[cols, rows];
-            
-            Random random = new Random();
-            for (int x = 0; x < cols; x++)
-                for (int y = 0; y < rows; y++)
-                    field[x,y] = random.Next((int)numDensity.Value) == 0;
+            logic = new Logic
+            (
+                cols: pictureBox1.Width / resolution,
+                rows: pictureBox1.Height / resolution,
+                (int)numDensity.Value
+            );
+
+
+            Text = $"Генерация {logic.CurrentGeneration}";
+
 
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             graphics = Graphics.FromImage(pictureBox1.Image);
@@ -84,36 +82,17 @@ namespace GameOfLife
                     else
                         newField[x, y] = field[x, y];
                     if (hasLife)
-                        graphics.FillRectangle(Brushes.Red, x * resolution, y * resolution, resolution, resolution);
+                        graphics.FillRectangle(Brushes.Red, x * resolution, y * resolution, resolution - 1, resolution - 1);
                 }
             }
 
             field = newField;
 
             pictureBox1.Refresh();
-            Text = $"Генерация {++currentGeneration}";
+            Text = $"Генерация {logic.CurrentGeneration}";
         }
 
-        private int fieldNeighbours(int x, int y)
-        {
-            int count = 0;
-
-            for (int i = -1; i < 2; i++)
-            {
-                for (int j = -1; j < 2; j++)
-                {
-                    var col = (x + i + cols) % cols;
-                    var row = (y + j + rows) % rows;
-                    var isSelfCheck = col == x && row == y;
-                    var hasLife = field[col, row];
-
-                    if (hasLife && !isSelfCheck)
-                        count++;
-                }
-            }
-
-            return count;
-        }
+        
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -130,39 +109,39 @@ namespace GameOfLife
             StopGame();
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (!timer1.Enabled)
-                return;
+        //private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    if (!timer1.Enabled)
+        //        return;
 
-            if (e.Button == MouseButtons.Left)
-            {
-                var x = e.Location.X / resolution;
-                var y = e.Location.Y / resolution;
+        //    if (e.Button == MouseButtons.Left)
+        //    {
+        //        var x = e.Location.X / resolution;
+        //        var y = e.Location.Y / resolution;
 
-                var validatePos = ValidateMousePos(x, y);
-                if (validatePos)
-                    field[x, y] = true;
-            }
+        //        var validatePos = ValidateMousePos(x, y);
+        //        if (validatePos)
+        //            field[x, y] = true;
+        //    }
 
-            if (e.Button == MouseButtons.Right)
-            {
-                var x = e.Location.X / resolution;
-                var y = e.Location.Y / resolution;
-                var validatePos = ValidateMousePos(x, y);
-                if (validatePos)
-                    field[x, y] = false;
-            }
-        }
+        //    if (e.Button == MouseButtons.Right)
+        //    {
+        //        var x = e.Location.X / resolution;
+        //        var y = e.Location.Y / resolution;
+        //        var validatePos = ValidateMousePos(x, y);
+        //        if (validatePos)
+        //            field[x, y] = false;
+        //    }
+        //}
 
-        private bool ValidateMousePos(int x, int y)
-        {
-            return x >= 0 && y >= 0 && x < cols && y < rows;
-        }
+        //private bool ValidateMousePos(int x, int y)
+        //{
+        //    return x >= 0 && y >= 0 && x < cols && y < rows;
+        //}
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Text = $"Генерация {++currentGeneration}";
+            Text = $"Генерация {logic.CurrentGeneration}";
         }
     }
 }

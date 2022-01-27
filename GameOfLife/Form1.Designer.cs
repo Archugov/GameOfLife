@@ -31,21 +31,21 @@ namespace GameOfLife
         {
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.numResolution = new System.Windows.Forms.NumericUpDown();
+            this.butStop = new System.Windows.Forms.Button();
+            this.butStart = new System.Windows.Forms.Button();
             this.numDensity = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.butStart = new System.Windows.Forms.Button();
-            this.butStop = new System.Windows.Forms.Button();
+            this.numResolution = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numResolution)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDensity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numResolution)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -73,46 +73,25 @@ namespace GameOfLife
             this.splitContainer1.SplitterDistance = 130;
             this.splitContainer1.TabIndex = 0;
             // 
-            // pictureBox1
+            // butStop
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1113, 697);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            this.butStop.Location = new System.Drawing.Point(14, 124);
+            this.butStop.Name = "butStop";
+            this.butStop.Size = new System.Drawing.Size(75, 23);
+            this.butStop.TabIndex = 5;
+            this.butStop.Text = "Стоп";
+            this.butStop.UseVisualStyleBackColor = true;
+            this.butStop.Click += new System.EventHandler(this.butStop_Click);
             // 
-            // label1
+            // butStart
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 11);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Разрешение";
-            // 
-            // numResolution
-            // 
-            this.numResolution.Location = new System.Drawing.Point(14, 28);
-            this.numResolution.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numResolution.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numResolution.Name = "numResolution";
-            this.numResolution.Size = new System.Drawing.Size(32, 20);
-            this.numResolution.TabIndex = 1;
-            this.numResolution.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
+            this.butStart.Location = new System.Drawing.Point(14, 95);
+            this.butStart.Name = "butStart";
+            this.butStart.Size = new System.Drawing.Size(75, 23);
+            this.butStart.TabIndex = 4;
+            this.butStart.Text = "Старт";
+            this.butStart.UseVisualStyleBackColor = true;
+            this.butStart.Click += new System.EventHandler(this.butStart_Click);
             // 
             // numDensity
             // 
@@ -140,25 +119,46 @@ namespace GameOfLife
             this.label2.TabIndex = 2;
             this.label2.Text = "Плотность";
             // 
-            // butStart
+            // numResolution
             // 
-            this.butStart.Location = new System.Drawing.Point(14, 95);
-            this.butStart.Name = "butStart";
-            this.butStart.Size = new System.Drawing.Size(75, 23);
-            this.butStart.TabIndex = 4;
-            this.butStart.Text = "Старт";
-            this.butStart.UseVisualStyleBackColor = true;
-            this.butStart.Click += new System.EventHandler(this.butStart_Click);
+            this.numResolution.Location = new System.Drawing.Point(14, 28);
+            this.numResolution.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.numResolution.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numResolution.Name = "numResolution";
+            this.numResolution.Size = new System.Drawing.Size(32, 20);
+            this.numResolution.TabIndex = 1;
+            this.numResolution.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             // 
-            // butStop
+            // label1
             // 
-            this.butStop.Location = new System.Drawing.Point(14, 124);
-            this.butStop.Name = "butStop";
-            this.butStop.Size = new System.Drawing.Size(75, 23);
-            this.butStop.TabIndex = 5;
-            this.butStop.Text = "Стоп";
-            this.butStop.UseVisualStyleBackColor = true;
-            this.butStop.Click += new System.EventHandler(this.butStop_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 11);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Разрешение";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1113, 697);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
             // timer1
             // 
@@ -180,9 +180,9 @@ namespace GameOfLife
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numResolution)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDensity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numResolution)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
