@@ -8,16 +8,18 @@ namespace GameOfLife
 {
     public class Logic
     {
+        public uint CurrentGeneration { get; private set; }
         private bool[,] field;
         private readonly int cols;
         private readonly int rows;
-        private Random random = new Random();
 
         public Logic(int cols, int rows, int density)
         {
             this.cols = cols;
             this.rows = rows;
             field = new bool[cols, rows];
+            
+            Random random = new Random();
 
             for (int x = 0; x < cols; x++)
                 for (int y = 0; y < rows; y++)
@@ -45,7 +47,7 @@ namespace GameOfLife
             return count;
         }
 
-        private void Generation()
+        public void Generation()
         {
             var newField = new bool[cols, rows];
 
@@ -66,6 +68,42 @@ namespace GameOfLife
             }
 
             field = newField;
+            CurrentGeneration++;
+        }
+
+        public bool[,] GetCurrentGeneration()
+        {
+            var result = new bool[cols, rows];
+
+            for (int x = 0; x < cols; x++)
+            {
+                for (int y = 0; y < rows; y++)
+                {
+                    result[x, y] = field[x, y];
+                }
+            }
+
+            return result;
+        }
+
+        private bool ValidateCellPos(int x, int y)
+        {
+            return x >= 0 && y >= 0 && x < cols && y < rows;
+        }
+
+        private void UpdateCell(int x, int y, bool state)
+        {
+            if (ValidateCellPos(x, y))
+                field[x, y] = state;
+        }
+
+        public void AddCell(int x, int y)
+        {
+            UpdateCell(x, y, state: true);
+        }
+        public void DeleteCell(int x, int y)
+        {
+            UpdateCell(x, y, state: false);
         }
     }
 }

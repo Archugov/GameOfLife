@@ -96,16 +96,21 @@ namespace GameOfLife
             // numDensity
             // 
             this.numDensity.Location = new System.Drawing.Point(14, 68);
+            this.numDensity.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
             this.numDensity.Minimum = new decimal(new int[] {
             2,
             0,
             0,
             0});
             this.numDensity.Name = "numDensity";
-            this.numDensity.Size = new System.Drawing.Size(32, 20);
+            this.numDensity.Size = new System.Drawing.Size(75, 20);
             this.numDensity.TabIndex = 3;
             this.numDensity.Value = new decimal(new int[] {
-            2,
+            10,
             0,
             0,
             0});
@@ -133,7 +138,7 @@ namespace GameOfLife
             0,
             0});
             this.numResolution.Name = "numResolution";
-            this.numResolution.Size = new System.Drawing.Size(32, 20);
+            this.numResolution.Size = new System.Drawing.Size(75, 20);
             this.numResolution.TabIndex = 1;
             this.numResolution.Value = new decimal(new int[] {
             3,
@@ -172,9 +177,8 @@ namespace GameOfLife
             this.ClientSize = new System.Drawing.Size(1251, 701);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "GameOfLife";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
