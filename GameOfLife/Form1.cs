@@ -107,12 +107,14 @@ namespace GameOfLife
             {
                 var x = e.Location.X / resolution;
                 var y = e.Location.Y / resolution;
+                logic.AddCell(x, y);
             }
 
             if (e.Button == MouseButtons.Right)
             {
                 var x = e.Location.X / resolution;
                 var y = e.Location.Y / resolution;
+                logic.DeleteCell(x, y);
             }
         }
     }
